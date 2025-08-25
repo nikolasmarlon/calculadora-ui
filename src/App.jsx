@@ -1,8 +1,11 @@
+import { Button } from "./components/Button";
+import { Text } from "./components/Text";
 
 export function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline text-gray-800">Calculadora</h1>
-    </>
+    <main className="py-28 px-4">
+      <Button>CE</Button>
+      <Text>CE</Text>
+    </main>
   )
 }
