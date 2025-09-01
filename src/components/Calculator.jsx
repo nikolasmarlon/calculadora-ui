@@ -5,39 +5,63 @@ import { Card } from "./Card";
 
 
 export function Calculator(){
+
+    const buttons = [
+        [
+            {input: 'CE'},
+            {input: "C", className: "flex-1 h-16"},
+            {input: "/", variant: "primary"},
+        ],
+        [
+            {input: "7"},
+            {input: "8"},
+            {input: "9"},
+            {input: "*", variant: "primary"},
+        ],
+        [
+            {input: "4"},
+            {input: "5"},
+            {input: "6"},
+            {input: "-", variant: "primary"},
+        ],
+        [
+            {input: "1"},
+            {input: "2"},
+            {input: "3"},
+            {input: "+", variant: "primary"},
+        ],
+        [
+            {input: "0", className: "flex-1 h-16"},
+            {input: ","},
+            {input: "=" , className: "w-16 h-16 bg-[#7f45e2]"},
+        ]
+    ]
+
+
+    function handleButtonClick(button){
+        console.log(button)
+    }
+
+
     return(
         <Card className="flex flex-col gap-[1.625rem] w-[22.25rem] pt-14 px-8 pb-8">
             <CalculatorDisplay operation={"1+1"} result={"2"} />      
 
             <div className="flex flex-col gap-3">
-                <div className="flex gap-3">
-                    <Button className='w-16 h-16'>CE</Button>
-                    <Button className='flex-1 h-16'>C</Button>
-                    <Button variant="primary" className='w-16 h-16'>/</Button>
-                </div>    
-                <div className="flex gap-3">
-                    <Button className='w-16 h-16'>7</Button>
-                    <Button className='w-16 h-16'>8</Button>
-                    <Button className='w-16 h-16'>9</Button>
-                    <Button variant="primary" className='w-16 h-16'>*</Button>
-                </div>    
-                <div className="flex gap-3">
-                    <Button className='w-16 h-16'>4</Button>
-                    <Button className='w-16 h-16'>5</Button>
-                    <Button className='w-16 h-16'>6</Button>
-                    <Button variant="primary" className='w-16 h-16'>-</Button>
-                </div>    
-                <div className="flex gap-3">
-                    <Button className='w-16 h-16'>1</Button>
-                    <Button className='w-16 h-16'>2</Button>
-                    <Button className='w-16 h-16'>3</Button>
-                    <Button variant="primary" className='w-16 h-16'>+</Button>
-                </div>    
-                <div className="flex gap-3">
-                    <Button className='flex-1 h-16'>0</Button>
-                    <Button className='w-16 h-16'>,</Button>
-                    <Button variant="primary" className='w-16 h-16'>=</Button>
-                </div>    
+                     {
+                        buttons.map((row, index) => (
+                            <div key={`row-${index}`} className="flex gap-3">
+                                 {
+                                    row.map((button) => (
+                                        <Button key={button.input} className={button.className || 'w-16 h-16'} variant={button.variant} 
+                                            onClick={() => handleButtonClick(button)}>
+                                                {button.input}
+                                        </Button>
+                                    ))
+                                 }
+                            </div>
+                        ))
+                     }                  
             </div>  
 
         </Card>
