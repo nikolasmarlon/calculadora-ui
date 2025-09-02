@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "./Button";
 import { CalculatorDisplay } from "./CalculatorDisplay";
 import { Card } from "./Card";
+import { CalculatorContext } from "../contexts/CalculatorContext";
 
 
 
 export function Calculator(){
     const [operationn , setOperationn ] = useState("")
     const [result , setResult ] = useState("")
+    const { updateHistory } = useContext(CalculatorContext)
 
     const buttons = [
         [
@@ -59,6 +61,7 @@ export function Calculator(){
             const operationResult = eval(operationn.replace(/,/g, ".")); // eval executa string como se fosse javascript
             const parseResult = operationResult.toString()?.replace(/\./g, ",");
             setResult(parseResult)
+            updateHistory(operationn, parseResult)
             return
         }
 
