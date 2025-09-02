@@ -51,7 +51,7 @@ export function Calculator(){
 
         if (input === 'CE'){
             setResult("")
-            setOperationn( operationn.slice(0, -2))
+            setOperationn( operationn.slice(0, -1))
             return
         }
 
@@ -63,7 +63,7 @@ export function Calculator(){
         }
 
         if(result){
-            setOperationn(isNaN(input) ? `${result}${input === ',' ? '' : ' '}${input}` : input)
+            setOperationn(isNaN(input) ? `${result}${input}` : input)
             setResult("")
             return
         }
@@ -74,7 +74,7 @@ export function Calculator(){
             return
         }
 
-        setOperationn(`${operationn}${operationn.endsWith(",") ? "" : " "}${input}`)
+        setOperationn(`${operationn}${input}`)
     }
 
 
