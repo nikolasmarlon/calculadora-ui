@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "./Button";
 import { CalculatorDisplay } from "./CalculatorDisplay";
 import { Card } from "./Card";
@@ -5,6 +6,8 @@ import { Card } from "./Card";
 
 
 export function Calculator(){
+    const [operationn , setOperationn ] = useState("")
+    const [result , setResult ] = useState("")
 
     const buttons = [
         [
@@ -38,14 +41,46 @@ export function Calculator(){
     ]
 
 
-    function handleButtonClick(button){
-        console.log(button)
+    function handleButtonClick(input){
+
+        if (input === 'C'){
+            setOperationn("")
+            setResult("")
+            return
+        }
+
+        if (input === 'CE'){
+            setResult("")
+            setOperationn( operationn.slice(0, -2))
+            return
+        }
+
+        if(input === '='){
+            const operationResult = eval(operationn.replace(/,/g, ".")); // eval executa string como se fosse javascript
+            const parseResult = operationResult.toString()?.replace(/\./g, ",");
+            setResult(parseResult)
+            return
+        }
+
+        if(result){
+            setOperationn(isNaN(input) ? `${result}${input === ',' ? '' : ' '}${input}` : input)
+            setResult("")
+            return
+        }
+
+        // para números decimais
+        if (input === "," && !operationn.endsWith(",")){
+            setOperationn( `${operationn},`)
+            return
+        }
+
+        setOperationn(`${operationn}${operationn.endsWith(",") ? "" : " "}${input}`)
     }
 
 
     return(
         <Card className="flex flex-col gap-[1.625rem] w-[22.25rem] pt-14 px-8 pb-8">
-            <CalculatorDisplay operation={"1+1"} result={"2"} />      
+            <CalculatorDisplay operation={operationn} result={result} />      
 
             <div className="flex flex-col gap-3">
                      {
@@ -54,7 +89,7 @@ export function Calculator(){
                                  {
                                     row.map((button) => (
                                         <Button key={button.input} className={button.className || 'w-16 h-16'} variant={button.variant} 
-                                            onClick={() => handleButtonClick(button)}>
+                                            onClick={() => handleButtonClick(button.input)}>
                                                 {button.input}
                                         </Button>
                                     ))
